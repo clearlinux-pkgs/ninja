@@ -4,7 +4,7 @@
 #
 Name     : ninja
 Version  : 1.11.1
-Release  : 20
+Release  : 21
 URL      : https://github.com/ninja-build/ninja/archive/v1.11.1/ninja-1.11.1.tar.gz
 Source0  : https://github.com/ninja-build/ninja/archive/v1.11.1/ninja-1.11.1.tar.gz
 Summary  : Ninja is a small build system with a focus on speed.
@@ -52,7 +52,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1661916452
+export SOURCE_DATE_EPOCH=1666741887
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -65,10 +65,10 @@ make  %{?_smp_mflags}  ||:
 
 
 %install
-export SOURCE_DATE_EPOCH=1661916452
+export SOURCE_DATE_EPOCH=1666741887
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/ninja
-cp %{_builddir}/ninja-%{version}/COPYING %{buildroot}/usr/share/package-licenses/ninja/b7a11257fc8046a2f00f1a685da1f2bca2a3ba50
+cp %{_builddir}/ninja-%{version}/COPYING %{buildroot}/usr/share/package-licenses/ninja/b7a11257fc8046a2f00f1a685da1f2bca2a3ba50 || :
 %make_install ||:
 ## install_append content
 install -Dpm0755 ninja -t %{buildroot}/usr/bin/
