@@ -3,6 +3,7 @@ jsoncpp
 llvm
 llvm12
 llvm13
+llvm14
 meson
 qtwebengine
 rustc

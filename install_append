@@ -1,1 +1,8 @@
 install -Dpm0755 ninja -t %{buildroot}/usr/bin/
+
+_PYTHON_VER=$(python3 -c 'import sysconfig; print(sysconfig.get_python_version())')
+_PYTHON_PLATLIB=$(python3 -c 'import sysconfig; print(sysconfig.get_path("platlib"))')
+mkdir -p %{buildroot}"${_PYTHON_PLATLIB}"/ninja
+mkdir -p %{buildroot}"${_PYTHON_PLATLIB}"/ninja-%{version}-py"${_PYTHON_VER}".egg-info
+touch %{buildroot}"${_PYTHON_PLATLIB}"/ninja/__init__.py
+printf "Name: ninja\nVersion: %{version}\n" > %{buildroot}"${_PYTHON_PLATLIB}"/ninja-%{version}-py"${_PYTHON_VER}".egg-info/PKG-INFO

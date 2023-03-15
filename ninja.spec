@@ -4,7 +4,7 @@
 #
 Name     : ninja
 Version  : 1.11.1
-Release  : 22
+Release  : 24
 URL      : https://github.com/ninja-build/ninja/archive/v1.11.1/ninja-1.11.1.tar.gz
 Source0  : https://github.com/ninja-build/ninja/archive/v1.11.1/ninja-1.11.1.tar.gz
 Summary  : Ninja is a small build system with a focus on speed.
@@ -12,7 +12,12 @@ Group    : Development/Tools
 License  : Apache-2.0
 Requires: ninja-bin = %{version}-%{release}
 Requires: ninja-license = %{version}-%{release}
+Requires: ninja-python = %{version}-%{release}
+Requires: ninja-python3 = %{version}-%{release}
 BuildRequires : buildreq-cmake
+# Suppress stripping binaries
+%define __strip /bin/true
+%define debug_package %{nil}
 
 %description
 Ninja is yet another build system. It takes as input the interdependencies of files (typically source code and output executables) and
@@ -26,7 +31,6 @@ seconds to start building after changing one file. Ninja is under a second.
 Summary: bin components for the ninja package.
 Group: Binaries
 Requires: ninja-license = %{version}-%{release}
-Provides: pypi(ninja)
 
 %description bin
 bin components for the ninja package.
@@ -38,6 +42,26 @@ Group: Default
 
 %description license
 license components for the ninja package.
+
+
+%package python
+Summary: python components for the ninja package.
+Group: Default
+Requires: ninja-python3 = %{version}-%{release}
+
+%description python
+python components for the ninja package.
+
+
+%package python3
+Summary: python3 components for the ninja package.
+Group: Default
+Requires: python3-core
+Requires: ninja
+Provides: pypi(ninja)
+
+%description python3
+python3 components for the ninja package.
 
 
 %prep
@@ -52,26 +76,33 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1666741887
+export SOURCE_DATE_EPOCH=1678907192
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto "
-export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
-export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
-export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto "
+export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
+export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
+export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
+export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
 make  %{?_smp_mflags}  ||:
 
 
 %install
-export SOURCE_DATE_EPOCH=1666741887
+export SOURCE_DATE_EPOCH=1678907192
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/ninja
 cp %{_builddir}/ninja-%{version}/COPYING %{buildroot}/usr/share/package-licenses/ninja/b7a11257fc8046a2f00f1a685da1f2bca2a3ba50 || :
 %make_install ||:
 ## install_append content
 install -Dpm0755 ninja -t %{buildroot}/usr/bin/
+
+_PYTHON_VER=$(python3 -c 'import sysconfig; print(sysconfig.get_python_version())')
+_PYTHON_PLATLIB=$(python3 -c 'import sysconfig; print(sysconfig.get_path("platlib"))')
+mkdir -p %{buildroot}"${_PYTHON_PLATLIB}"/ninja
+mkdir -p %{buildroot}"${_PYTHON_PLATLIB}"/ninja-%{version}-py"${_PYTHON_VER}".egg-info
+touch %{buildroot}"${_PYTHON_PLATLIB}"/ninja/__init__.py
+printf "Name: ninja\nVersion: %{version}\n" > %{buildroot}"${_PYTHON_PLATLIB}"/ninja-%{version}-py"${_PYTHON_VER}".egg-info/PKG-INFO
 ## install_append end
 
 %files
@@ -84,3 +115,10 @@ install -Dpm0755 ninja -t %{buildroot}/usr/bin/
 %files license
 %defattr(0644,root,root,0755)
 /usr/share/package-licenses/ninja/b7a11257fc8046a2f00f1a685da1f2bca2a3ba50
+
+%files python
+%defattr(-,root,root,-)
+
+%files python3
+%defattr(-,root,root,-)
+/usr/lib/python3*/*
