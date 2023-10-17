@@ -1,9 +1,15 @@
 # This file contains recursive sources that require this package
+grpc
 jsoncpp
 llvm
-llvm12
-llvm13
 llvm14
+llvm15
 meson
+pypi-levenshtein
+pypi-numpy
+qemu
+qemu-guest-additions
+qt6base
+qt6webengine
 qtwebengine
 rustc
