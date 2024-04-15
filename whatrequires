@@ -1,9 +1,11 @@
 # This file contains recursive sources that require this package
+dpcpp-compiler
 grpc
 jsoncpp
 llvm
 llvm14
 llvm15
+llvm16
 meson
 pypi-levenshtein
 pypi-numpy
