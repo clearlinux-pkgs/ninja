@@ -6,10 +6,10 @@
 # autospec commit: 5905be9
 #
 Name     : ninja
-Version  : 1.12.0
-Release  : 26
-URL      : https://github.com/ninja-build/ninja/archive/v1.12.0/ninja-1.12.0.tar.gz
-Source0  : https://github.com/ninja-build/ninja/archive/v1.12.0/ninja-1.12.0.tar.gz
+Version  : 1.12.1
+Release  : 27
+URL      : https://github.com/ninja-build/ninja/archive/v1.12.1/ninja-1.12.1.tar.gz
+Source0  : https://github.com/ninja-build/ninja/archive/v1.12.1/ninja-1.12.1.tar.gz
 Summary  : Ninja is a small build system with a focus on speed.
 Group    : Development/Tools
 License  : Apache-2.0
@@ -67,10 +67,10 @@ python3 components for the ninja package.
 
 
 %prep
-%setup -q -n ninja-1.12.0
-cd %{_builddir}/ninja-1.12.0
+%setup -q -n ninja-1.12.1
+cd %{_builddir}/ninja-1.12.1
 pushd ..
-cp -a ninja-1.12.0 buildavx2
+cp -a ninja-1.12.1 buildavx2
 popd
 
 %build
@@ -81,7 +81,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1713199245
+export SOURCE_DATE_EPOCH=1715874036
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -127,7 +127,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1713199245
+export SOURCE_DATE_EPOCH=1715874036
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/ninja
 cp %{_builddir}/ninja-%{version}/COPYING %{buildroot}/usr/share/package-licenses/ninja/b7a11257fc8046a2f00f1a685da1f2bca2a3ba50 || :
