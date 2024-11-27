@@ -1,4 +1,14 @@
-install -Dpm0755 ninja -t %{buildroot}/usr/bin/
+install -Dm0755 ninja %{buildroot}/usr/bin/ninjas
+cat << "EOF" > %{buildroot}/usr/bin/ninja
+#!/bin/bash
+if [ -z "$NINJA_PARALLEL" ]; then
+ninjas $*
+else
+ninjas -j"$NINJA_PARALLEL" $*
+fi
+EOF
+chmod 0755 %{buildroot}/usr/bin/ninja
+
 
 _PYTHON_VER=$(python3 -c 'import sysconfig; print(sysconfig.get_python_version())')
 _PYTHON_PLATLIB=$(python3 -c 'import sysconfig; print(sysconfig.get_path("platlib"))')

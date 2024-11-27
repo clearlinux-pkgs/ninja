@@ -1,17 +1,23 @@
 # This file contains recursive sources that require this package
+Vulkan-Headers
+compat-grpc-soname66
 dpcpp-compiler
 grpc
-jsoncpp
 llvm
 llvm14
 llvm15
 llvm16
+llvm17
+llvm18
 meson
+pypi-blosc
+pypi-blosc2
 pypi-levenshtein
 pypi-numpy
 qemu
 qemu-guest-additions
 qt6base
+qt6tools
 qt6webengine
 qtwebengine
 rustc
